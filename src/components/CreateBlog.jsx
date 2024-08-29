@@ -6,11 +6,33 @@ import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
   const [html, setHtml] = useState("");
+  const [imageId, setImageId] = useState("");
+
   const navigate = useNavigate();
 
   function onChange(e) {
     setHtml(e.target.value);
   }
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await fetch("http://127.0.0.1:8000/api/save-temp-image", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.status == false) {
+      alert(result.errors.image);
+      e.target.value = null;
+    }
+
+    setImageId(result.image.id);
+  };
 
   const {
     register,
@@ -20,7 +42,7 @@ const CreateBlog = () => {
   } = useForm();
 
   const formSubmit = async (data) => {
-    const newData = { ...data, 'description': html };
+    const newData = { ...data, description: html, tempImageId: imageId };
 
     const response = await fetch("http://127.0.0.1:8000/api/blogs", {
       method: "POST",
@@ -32,7 +54,7 @@ const CreateBlog = () => {
 
     toast("Blog created successfully!");
 
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -77,7 +99,11 @@ const CreateBlog = () => {
             </div>
             <div className="mb-3">
               <label className="form-label">Image</label>
-              <input type="file" className="form-control" />
+              <input
+                onChange={handleFileChange}
+                type="file"
+                className="form-control"
+              />
             </div>
             <div className="mb-3">
               <label className="form-label">Author</label>
