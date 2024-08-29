@@ -1,19 +1,26 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 
-const BlogCard = () => {
+// eslint-disable-next-line react/prop-types
+const BlogCard = ({ blog }) => {
+
+  const showImage = (img) =>{
+    return (img) ? 'http://127.0.0.1:8000/uploads/blogs/' + img : 'https://placehold.co/600x400'
+  }
+
   return (
     <div className="col-12 col-md-2 col-lg-3 mb-3">
       <div className="card border-0 shadow-lg">
         <img
-          src="https://placehold.co/600x400"
+          src={showImage(blog.image)}
+          height="200"
           className="card-img-top"
           alt=""
         />
         <div className="card-body">
-          <h2 className="card-title h5">Blog Title</h2>
+          <h2 className="card-title h5">{blog.title}</h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere
-            quas odio quam facilis earum quisquam et.
+            {blog.shortDesc}
           </p>
           <div className="d-flex justify-content-between align-items-center">
             <a href="#" className="btn btn-dark">
