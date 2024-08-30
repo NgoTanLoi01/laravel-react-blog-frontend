@@ -3,10 +3,11 @@ import React from "react";
 
 // eslint-disable-next-line react/prop-types
 const BlogCard = ({ blog }) => {
-
-  const showImage = (img) =>{
-    return (img) ? 'http://127.0.0.1:8000/uploads/blogs/' + img : 'https://placehold.co/600x400'
-  }
+  const showImage = (img) => {
+    return img
+      ? "http://127.0.0.1:8000/uploads/blogs/" + img
+      : "https://placehold.co/600x400";
+  };
 
   return (
     <div className="col-12 col-md-2 col-lg-3 mb-3">
@@ -19,14 +20,12 @@ const BlogCard = ({ blog }) => {
         />
         <div className="card-body">
           <h2 className="card-title h5">{blog.title}</h2>
-          <p>
-            {blog.shortDesc}
-          </p>
+          <p>{blog.shortDesc}</p>
           <div className="d-flex justify-content-between align-items-center">
-            <a href="#" className="btn btn-dark">
+            <a href={"/blog/" + blog.id} className="btn btn-dark">
               Read More
             </a>
-            <a href="#" className="btn btn-dark">
+            <a href={"/edit/" + blog.id} className="btn btn-dark">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
