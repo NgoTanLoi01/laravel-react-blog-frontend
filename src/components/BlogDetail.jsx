@@ -37,7 +37,10 @@ const BlogDetail = () => {
             />
           )}
 
-          <div className="mt-5" dangerouslySetInnerHTML={{ __html: blog.description }}></div>
+          <div
+            className="mt-5"
+            dangerouslySetInnerHTML={{ __html: blog.description }}
+          ></div>
         </div>
       </div>
     </div>
